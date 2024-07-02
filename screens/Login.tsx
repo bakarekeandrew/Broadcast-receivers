@@ -1,10 +1,29 @@
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, DrawerActions } from '@react-navigation/native'
 import { Entypo } from '@expo/vector-icons';
+import {app, auth} from '../firebase';
+import {getAuth, signInWithEmailAndPassword} from '@firebase/auth';
+
+
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const auth = getAuth(app);
+
+    const handleLogin = async () => {
+     try {
+       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+       navigation.navigate("HomeScreen");
+      } catch (error) {
+        console.error(error);
+      // Handle login errors (e.g., display error message)
+    }
+  };
+
+
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
@@ -33,10 +52,16 @@ const Login = () => {
         <TextInput
           placeholder="Email..."
           className="w-80 h-12 border rounded-full p-3 mb-3"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
         />
         <TextInput
           placeholder="Password..."
           className="w-80 h-12 border rounded-full p-3 mb-1"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
         />
       </View>
       <View className="flex-row px-[100px] mb-10">
@@ -45,13 +70,13 @@ const Login = () => {
           <Text className="text-[#00008B] font-semibold">Signup</Text>
         </TouchableOpacity>
       </View>
-      <View className="items-center justify-center">
-        <TouchableOpacity className="items-center justify-center w-80 h-12 bg-[#00008B] border rounded-full ">
-          <Text className="text-white text-[20px] font-semibold">Login</Text>
-          <Text className="pt-5">Or</Text>
+      <View className="items-center justify-center ">
+        <TouchableOpacity onPress={handleLogin} className="items-center justify-center w-80 h-12 bg-[#00008B] border rounded-full pt-5 mb-4">
+          <Text className="text-white text-[20px] font-semibold ">Login</Text>
+          <Text className="mt-3">Or</Text>
         </TouchableOpacity>
       </View>
-      <View className="items-center justify-center pt-5">
+      <View className="items-center justify-center mt-4">
             <Text className="font-semibold">Signup with Social Media</Text>
             <View className="flex-row pt-3">
               <TouchableOpacity>

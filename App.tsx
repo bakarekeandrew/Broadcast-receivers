@@ -6,9 +6,12 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
+import HomeScreen from './screens/HomeScreen';
 import CustomDrawerContent from './components/CustomDrawerContent';
 import Calculator from './screens/Calculator';
 import { Ionicons } from '@expo/vector-icons';
+
+
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -52,6 +55,7 @@ const BottomTabs = () => (
     <Tab.Screen name="SignUpScreenStack" component={SignUpScreenStack} options={{ tabBarLabel: 'Signup' }} />
     <Tab.Screen name="LoginScreenStack" component={LoginScreenStack} options={{ tabBarLabel: 'Login' }} />
     <Tab.Screen name="CalculatorScreenStack" component={CalculatorScreenStack} options={{ tabBarLabel: 'Calculator' }} />
+    <Tab.Screen name="HomeScreen" component={HomeScreen} />
   </Tab.Navigator>
 );
 
